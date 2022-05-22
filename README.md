@@ -1,16 +1,26 @@
-### Hi there 👋
+hello! here's a little about me:
 
-<!--
-**TheMY3/TheMY3** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<h1>
+  i really like music :headphones:
+</h1>
 
-Here are some ideas to get you started:
+<!-- Nothing weird to see here -->
+<p align="center">
+  <a href="https://themy3.vercel.app/api/now-playing?open">
+    <img src="https://themy3.vercel.app/api/now-playing">
+  </a>
+</p>
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+<p align="center">
+  <img src="https://themy3.vercel.app/api/top-played">
+</p>
+ 
+<p></p>
+
+<h1>
+  tools, languages, and other things that I like to work with :hammer:
+</h1>
+
+<p align="center">
+  <img src="https://themy3.vercel.app/api/skills">
+</p>
