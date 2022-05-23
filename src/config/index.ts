@@ -101,74 +101,53 @@ export const ERROR_MESSAGE_500 = 'Something went terribly wrong...';
  * List of skills to be displayed.
  */
 export const SKILL_KEYS: string[] = [
-  'vue',
-  'react',
-  'sass',
-  'typescript',
-  'nuxt',
-  'node',
-  'mongodb',
-  'terraform',
-  'csharp',
-  'python',
-  'java',
-  'c',
-  'cplusplus',
-  'git',
+    'git',
+
+    'php',
+    'python',
+
+    'vue',
+    'html',
+    'javascript',
+    'css',
+
+    'mongodb',
+
+    'terraform',
 ];
 
 /**
  * Spotify authorization scopes.
  */
 export const SPOTIFY_AUTHORIZATION_SCOPES = [
-  'user-read-playback-position',
-  'user-read-recently-played',
-  'user-read-currently-playing',
-  'user-read-playback-state',
-  'user-top-read',
-];
-
-/**
- * Chess colors for piece images.
- */
-export const CHESS_COLORS: string[] = [
-  'white',
-  'black',
-];
-
-/**
- * Chess pieces keys for piece images.
- */
-export const CHESS_PIECES: string[] = [
-  'b',
-  'k',
-  'n',
-  'p',
-  'q',
-  'r'
+    'user-read-playback-position',
+    'user-read-recently-played',
+    'user-read-currently-playing',
+    'user-read-playback-state',
+    'user-top-read',
 ];
 
 /**
  * Lets Github know we're returning an image.
  */
 export const IMAGE_RESPONSE_HEADERS: [string, string] = [
-  'Content-Type',
-  'image/svg+xml',
+    'Content-Type',
+    'image/svg+xml',
 ];
 
 /**
  * Tells the user when to update the image.
  */
 export const CACHE_CONTROL_RESPONSE_HEADERS: [string, string] = [
-  'Cache-Control',
-  's-maxage=1, stale-while-revalidate',
+    'Cache-Control',
+    's-maxage=1, stale-while-revalidate',
 ];
 
 /**
  * Time range keys for top played Spotify endpoint.
  */
 export const SPOTIFY_TIME_RANGE_KEYS: string[] = [
-  'long_term',
-  'medium_term',
-  'short_term',
+    'long_term',
+    'medium_term',
+    'short_term',
 ];

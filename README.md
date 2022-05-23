@@ -14,13 +14,3 @@ hello! here's a little about me:
 <p align="center">
   <img src="https://themy3.vercel.app/api/top-played">
 </p>
- 
-<p></p>
-
-<h1>
-  tools, languages, and other things that I like to work with :hammer:
-</h1>
-
-<p align="center">
-  <img src="https://themy3.vercel.app/api/skills">
-</p>
