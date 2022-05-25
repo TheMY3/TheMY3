@@ -7,7 +7,6 @@ import {
   SKILLS_CSS,
 } from './config';
 import ConvertSVG from '../general/ConvertSVG';
-import Icon from './Icon';
 
 export interface ISkillsParameters {
   skills: string[];
@@ -15,7 +14,7 @@ export interface ISkillsParameters {
 
 /**
  * Component for various SVG icons.
- * 
+ *
  * @param {string[]} skills List of skills to display.
  * @returns {React.FC} Functional React component.
  */
@@ -23,16 +22,13 @@ export const Skills: React.FC<ISkillsParameters> = ({ skills }: ISkillsParameter
   return (
     <ConvertSVG
       width="800"
-      height="212">
+      height="100">
       <div id="icon-wrapper">
         {skills.map((skillName) => (
-          <Icon
-            key={ `icon-${ skillName }` }
-            name={ skillName }
-            skill={ PATHS[skillName] } />
+            React.createElement(PATHS[skillName])
         ))}
       </div>
-      
+
       <style>
         { SKILLS_CSS }
       </style>

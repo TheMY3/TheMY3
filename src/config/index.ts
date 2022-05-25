@@ -97,23 +97,62 @@ export const ERROR_MESSAGE_405 = 'Endpoint blocked: Not in development environme
  */
 export const ERROR_MESSAGE_500 = 'Something went terribly wrong...';
 
+export const LANGUAGE_KEYS: string[] = [
+    'PHP',
+    'Javascript',
+    'Python',
+    'Golang',
+    'HTML',
+    'CSS',
+];
+
+export const DATABASE_KEYS: string[] = [
+    'Mysql',
+    'Manticore',
+    'Redis',
+    'Postgresql',
+    'Mongodb',
+    'Sqlite',
+];
+
 /**
- * List of skills to be displayed.
+ * Libraries and Frameworks
  */
+export const LIBRARY_KEYS: string[] = [
+    'Laravel',
+    'Jquery',
+    'Vue',
+    'Bootstrap',
+];
+
+export const CLOUD_KEYS: string[] = [
+    'Cloudflare',
+    'Digitalocean',
+    'AWS',
+    'Linode',
+];
+
+export const DEVOPS_KEYS: string[] = [
+    'Arch',
+    'Ubuntu',
+    'Nginx',
+    'Docker',
+    'Ansible',
+    'Kubernetes',
+    'Terraform',
+];
+
+export const TOOLS_KEYS: string[] = [
+    'Arch',
+    'Sway',
+    'Git',
+    'Zsh',
+    'Neovim',
+    'Phpstorm',
+];
+
 export const SKILL_KEYS: string[] = [
-    'git',
 
-    'php',
-    'python',
-
-    'vue',
-    'html',
-    'javascript',
-    'css',
-
-    'mongodb',
-
-    'terraform',
 ];
 
 /**

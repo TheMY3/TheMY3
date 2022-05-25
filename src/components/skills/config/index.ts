@@ -1,21 +1,80 @@
-import css from './css';
-import git from './git';
-import html from './html';
-import mongodb from './mongodb';
-import nginx from './nginx';
-import python from './python';
-import terraform from './terraform';
-import vue from './vue';
+// import css from './css';
+// import git from './git';
+// import javascript from './javascript';
+// import html from './html';
+// import mongodb from './mongodb';
+// import nginx from './nginx';
+// import python from './python';
+// import terraform from './terraform';
+// import vue from './vue';
+import Ansible from './ansible';
+import Arch from './arch';
+import AWS from './aws';
+import Bootstrap from './bootstrap';
+import CSS from './css';
+import Cloudflare from './cloudflare';
+import Digitalocean from './digitalocean';
+import Docker from './docker';
+import Javascript from './javascript';
+import Jquery from './jquery';
+import Git from './git';
+import Golang from './golang';
+import HTML from './html';
+import Kubernetes from './kubernetes';
+import Laravel from './laravel';
+import Linode from './linode';
+import Manticore from './manticore';
+import Mongodb from './mongodb';
+import Mysql from './mysql';
+import Neovim from './neovim';
+import Nginx from './nginx';
+import Phpstorm from './phpstorm';
+import Postgresql from './postgresql';
+import PHP from './php';
+import Python from './python';
+import Redis from './redis';
+import Sqlite from './sqlite';
+import Sway from './sway';
+import Terraform from './terraform';
+import Ubuntu from './ubuntu';
+import Vue from './vue';
+import Zsh from './zsh';
 
+// @link https://svg2jsx.com/
+// @link https://www.svgrepo.com/
 export const PATHS: object = {
-  css,
-  git,
-  html,
-  mongodb,
-  nginx,
-  python,
-  terraform,
-  vue,
+  Ansible,
+  Arch,
+  AWS,
+  Bootstrap,
+  Cloudflare,
+  CSS,
+  Digitalocean,
+  Docker,
+  Git,
+  Golang,
+  Javascript,
+  Jquery,
+  HTML,
+  Kubernetes,
+  Laravel,
+  Linode,
+  Manticore,
+  Mongodb,
+  Mysql,
+  Nginx,
+  Neovim,
+  Phpstorm,
+  Postgresql,
+  Python,
+  PHP,
+  Redis,
+  Sqlite,
+  Sway,
+  Terraform,
+  Ubuntu,
+  Vue,
+  Zsh,
 };
 
 export const SKILLS_CSS = `
