@@ -1,12 +1,3 @@
-// import css from './css';
-// import git from './git';
-// import javascript from './javascript';
-// import html from './html';
-// import mongodb from './mongodb';
-// import nginx from './nginx';
-// import python from './python';
-// import terraform from './terraform';
-// import vue from './vue';
 import Ansible from './ansible';
 import Arch from './arch';
 import AWS from './aws';
