@@ -284,7 +284,8 @@ img:not([src]) {
  * Titles for TopPlayed lists.
  */
 export const TOP_PLAYED_LIST_TITLES = [
-  'all time favorites',
-  'monthly favorites',
-  'current favorites',
+  'this month favorites',  // Top played tracks (last ~4 weeks)
+  'recently liked',        // Recently added to liked songs
+  'recently played',       // Recently played tracks
+  // 'yearly favorites',   // Medium-term top played - commented for future use
 ];

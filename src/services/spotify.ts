@@ -12,6 +12,7 @@ import {
   SPOTIFY_GET_TOP_PLAYED_URL,
   SPOTIFY_RECENTLY_PLAYED_URL,
   SPOTIFY_REFRESH_TOKEN,
+  SPOTIFY_SAVED_TRACKS_URL,
 } from '../config';
 import { getImageData } from './general';
 
@@ -24,6 +25,7 @@ import {
   ICursorBasedPagingObject,
   IPagingObject,
   IPlayHistoryObject,
+  ISavedTrackObject,
   ITrackObject,
 } from '../types/spotify';
 
@@ -181,6 +183,54 @@ export const getTopPlayed = async (timeRange: string): Promise<ITrackObject[]> =
   if (status === 200) {
     const data: IPagingObject<ITrackObject> = await response.json();
     return data.items;
+  } else {
+    return [];
+  }
+};
+
+/**
+ * Requests saved (liked) tracks from Spotify.
+ *
+ * @returns {Promise<ITrackObject[]>} Array of Spotify track objects.
+ */
+export const getSavedTracks = async (): Promise<ITrackObject[]> => {
+  const Authorization: string = await getAuthorizationToken();
+
+  const response: Response = await fetch(SPOTIFY_SAVED_TRACKS_URL, {
+    headers: {
+      Authorization,
+    },
+  });
+
+  const { status } = response;
+
+  if (status === 200) {
+    const data: IPagingObject<ISavedTrackObject> = await response.json();
+    return data.items.map((item) => item.track);
+  } else {
+    return [];
+  }
+};
+
+/**
+ * Requests recently played tracks from Spotify.
+ *
+ * @returns {Promise<ITrackObject[]>} Array of Spotify track objects.
+ */
+export const getRecentlyPlayedTracks = async (): Promise<ITrackObject[]> => {
+  const Authorization: string = await getAuthorizationToken();
+
+  const response: Response = await fetch(`${SPOTIFY_RECENTLY_PLAYED_URL.replace('limit=1', 'limit=5')}`, {
+    headers: {
+      Authorization,
+    },
+  });
+
+  const { status } = response;
+
+  if (status === 200) {
+    const data: ICursorBasedPagingObject<IPlayHistoryObject> = await response.json();
+    return data.items.map((item) => item.track);
   } else {
     return [];
   }

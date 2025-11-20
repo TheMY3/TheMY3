@@ -78,6 +78,11 @@ export const SPOTIFY_GET_TRACK_URL = 'https://api.spotify.com/v1/tracks';
 export const SPOTIFY_RECENTLY_PLAYED_URL = 'https://api.spotify.com/v1/me/player/recently-played?limit=1';
 
 /**
+ * Spotify saved tracks endpoint.
+ */
+export const SPOTIFY_SAVED_TRACKS_URL = 'https://api.spotify.com/v1/me/tracks?limit=5';
+
+/**
  * Spotify authorization header.
  */
 export const SPOTIFY_AUTHORIZATION = `Basic ${Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')}`;
@@ -164,6 +169,7 @@ export const SPOTIFY_AUTHORIZATION_SCOPES = [
     'user-read-currently-playing',
     'user-read-playback-state',
     'user-top-read',
+    'user-library-read',  // Required for saved tracks (liked songs)
 ];
 
 /**
@@ -184,9 +190,19 @@ export const CACHE_CONTROL_RESPONSE_HEADERS: [string, string] = [
 
 /**
  * Time range keys for top played Spotify endpoint.
+ * Options: 'long_term' (years), 'medium_term' (~6 months), 'short_term' (~4 weeks)
  */
 export const SPOTIFY_TIME_RANGE_KEYS: string[] = [
-    'long_term',
-    'medium_term',
+    // 'medium_term', // Yearly favorites - commented for future use
     'short_term',
+];
+
+/**
+ * Data source types for Spotify widgets.
+ * Options: 'top' (top played), 'saved' (liked songs), 'recent' (recently played)
+ */
+export const SPOTIFY_DATA_SOURCES: string[] = [
+    'top',      // Top played tracks (uses time_range)
+    'saved',    // Recently liked tracks
+    'recent',   // Recently played tracks
 ];

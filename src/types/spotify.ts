@@ -110,9 +110,14 @@ interface ITrackSimplifiedObject {
 }
 
 export interface IPlayHistoryObject {
-  track: ITrackSimplifiedObject;
+  track: ITrackObject;
   played_at: number;
   context: object;
+}
+
+export interface ISavedTrackObject {
+  added_at: string;
+  track: ITrackObject;
 }
 
 export interface IAuthorizationTokenResponse {
