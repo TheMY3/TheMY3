@@ -105,10 +105,6 @@ export interface IPagingObject<T> {
   total: number;
 }
 
-interface ITrackSimplifiedObject {
-  id: string;
-}
-
 export interface IPlayHistoryObject {
   track: ITrackObject;
   played_at: number;

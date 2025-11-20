@@ -38,12 +38,13 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     const trackLists: ITrackObject[][] = await Promise.all(
       SPOTIFY_DATA_SOURCES.map(async (source) => {
         switch (source) {
-          case 'top':
+          case 'top': {
             // Top played tracks for each time range
             const topTracks = await Promise.all(
               SPOTIFY_TIME_RANGE_KEYS.map(async (timeRange) => await getTopPlayed(timeRange))
             );
             return topTracks[0] || []; // Get first (and only) time range
+          }
           case 'saved':
             return await getSavedTracks();
           case 'recent':
