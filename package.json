@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Github profile README.md",
   "main": "index.js",
+  "engines": {
+    "node": ">=18.x"
+  },
   "scripts": {
     "start": "vercel dev",
     "lint": "eslint . --ext .ts,.tsx --fix"
