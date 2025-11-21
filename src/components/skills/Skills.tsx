@@ -25,7 +25,7 @@ export const Skills: React.FC<ISkillsParameters> = ({ skills }: ISkillsParameter
       height="100">
       <div id="icon-wrapper">
         {skills.map((skillName) => (
-            <div key={skillName} title={skillName}>
+            <div key={skillName}>
               {React.createElement(PATHS[skillName])}
             </div>
         ))}

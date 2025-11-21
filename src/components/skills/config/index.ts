@@ -97,7 +97,6 @@ export const SKILLS_CSS = `
 }
 
 #icon-wrapper > div {
-  position: relative;
   display: inline-block;
 }
 
@@ -108,21 +107,5 @@ export const SKILLS_CSS = `
   box-shadow: 2px 2px 2px rgba(0,0,0,.2), -1px -1px 1px rgba(0,0,0,.05);
   margin: 12px;
   padding: 8px;
-  cursor: pointer;
-}
-
-#icon-wrapper > div:hover::after {
-  content: attr(title);
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-  z-index: 1000;
 }
 `;
