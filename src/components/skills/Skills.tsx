@@ -22,7 +22,7 @@ export const Skills: React.FC<ISkillsParameters> = ({ skills }: ISkillsParameter
   return (
     <ConvertSVG
       width="800"
-      height="600">
+      height="100">
       <div id="icon-wrapper">
         {skills.map((skillName) => (
             <div key={skillName} title={skillName}>
