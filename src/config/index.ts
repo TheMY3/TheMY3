@@ -5,7 +5,7 @@ dotenv.config();
 /**
  * Chess.com username to request daily games from.
  */
-export const CHESS_COM_USERNAME = process.env.CHESS_COM_USERNAME || 'andyruwruw';
+export const CHESS_COM_USERNAME = process.env.CHESS_COM_USERNAME || 'themy3';
 
 /**
  * Current environment.
