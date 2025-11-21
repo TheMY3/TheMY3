@@ -23,10 +23,16 @@ These are some major technologies that I use or have worked on in the past:
   <img src="https://themy3.vercel.app/api/languages">
 </p>
 
-**Libraries and Frameworks**
+**Frontend Technologies**
 
 <p align="center">
-  <img src="https://themy3.vercel.app/api/libraries">
+  <img src="https://themy3.vercel.app/api/frontend">
+</p>
+
+**Frameworks**
+
+<p align="center">
+  <img src="https://themy3.vercel.app/api/frameworks">
 </p>
 
 **Databases**
@@ -35,22 +41,34 @@ These are some major technologies that I use or have worked on in the past:
   <img src="https://themy3.vercel.app/api/databases">
 </p>
 
-**Cloud**
+**Cloud Providers**
 
 <p align="center">
   <img src="https://themy3.vercel.app/api/clouds">
 </p>
 
-**DevOps**
+**DevOps & Infrastructure**
 
 <p align="center">
   <img src="https://themy3.vercel.app/api/devops">
 </p>
 
-**Tools**
+**Development Workspace**
 
 <p align="center">
-  <img src="https://themy3.vercel.app/api/tools">
+  <img src="https://themy3.vercel.app/api/workspace">
+</p>
+
+**Code Editors & IDEs**
+
+<p align="center">
+  <img src="https://themy3.vercel.app/api/editors">
+</p>
+
+**AI Assistants**
+
+<p align="center">
+  <img src="https://themy3.vercel.app/api/ai-assistants">
 </p>
 
 [//]: # (**Other things**)

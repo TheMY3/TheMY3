@@ -102,15 +102,38 @@ export const ERROR_MESSAGE_405 = 'Endpoint blocked: Not in development environme
  */
 export const ERROR_MESSAGE_500 = 'Something went terribly wrong...';
 
+/**
+ * Programming Languages
+ */
 export const LANGUAGE_KEYS: string[] = [
     'PHP',
     'Javascript',
     'Python',
     'Golang',
-    'HTML',
-    'CSS',
+    'Lua',
 ];
 
+/**
+ * Frontend Technologies
+ */
+export const FRONTEND_KEYS: string[] = [
+    'HTML',
+    'CSS',
+    'Jquery',
+];
+
+/**
+ * Frameworks
+ */
+export const FRAMEWORK_KEYS: string[] = [
+    'Laravel',
+    'Vue',
+    'Bootstrap',
+];
+
+/**
+ * Databases
+ */
 export const DATABASE_KEYS: string[] = [
     'Mysql',
     'Manticore',
@@ -121,25 +144,23 @@ export const DATABASE_KEYS: string[] = [
 ];
 
 /**
- * Libraries and Frameworks
+ * Cloud Providers
  */
-export const LIBRARY_KEYS: string[] = [
-    'Laravel',
-    'Jquery',
-    'Vue',
-    'Bootstrap',
-];
-
 export const CLOUD_KEYS: string[] = [
     'Cloudflare',
     'Digitalocean',
     'AWS',
     'Linode',
+    'Vercel',
 ];
 
+/**
+ * DevOps & Infrastructure
+ */
 export const DEVOPS_KEYS: string[] = [
-    'Arch',
     'Ubuntu',
+    'CentOS',
+    'Bash',
     'Nginx',
     'Docker',
     'Ansible',
@@ -147,17 +168,45 @@ export const DEVOPS_KEYS: string[] = [
     'Terraform',
 ];
 
-export const TOOLS_KEYS: string[] = [
+/**
+ * Development Workspace
+ */
+export const WORKSPACE_KEYS: string[] = [
+    'Fedora',
+    'Hyprland',
     'Arch',
-    'Sway',
-    'Git',
     'Zsh',
+];
+
+/**
+ * Code Editors & IDEs
+ */
+export const EDITOR_KEYS: string[] = [
     'Neovim',
     'Phpstorm',
+    'Sublime',
+];
+
+/**
+ * AI Assistants
+ */
+export const AI_ASSISTANTS_KEYS: string[] = [
+    'Claude',
+    'Windsurf',
+    'Copilot',
+    'Codex',
 ];
 
 export const SKILL_KEYS: string[] = [
-
+    ...LANGUAGE_KEYS,
+    ...FRONTEND_KEYS,
+    ...FRAMEWORK_KEYS,
+    ...DATABASE_KEYS,
+    ...CLOUD_KEYS,
+    ...DEVOPS_KEYS,
+    ...WORKSPACE_KEYS,
+    ...EDITOR_KEYS,
+    ...AI_ASSISTANTS_KEYS,
 ];
 
 /**

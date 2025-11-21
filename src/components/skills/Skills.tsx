@@ -22,10 +22,12 @@ export const Skills: React.FC<ISkillsParameters> = ({ skills }: ISkillsParameter
   return (
     <ConvertSVG
       width="800"
-      height="100">
+      height="600">
       <div id="icon-wrapper">
         {skills.map((skillName) => (
-            React.createElement(PATHS[skillName])
+            <div key={skillName} title={skillName}>
+              {React.createElement(PATHS[skillName])}
+            </div>
         ))}
       </div>
 

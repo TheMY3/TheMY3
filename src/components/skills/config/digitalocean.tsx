@@ -6,7 +6,7 @@ function Icon() {
             xmlns="http://www.w3.org/2000/svg"
             width="70"
             height="70"
-            ariaLabel="DigitalOcean"
+            aria-label="DigitalOcean"
             viewBox="0 0 512 512"
         >
             <rect width="512" height="512" fill="#fff" rx="15%"></rect>
