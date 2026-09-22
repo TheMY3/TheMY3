@@ -26,18 +26,36 @@ import {
   IPagingObject,
   IPlayHistoryObject,
   ISavedTrackObject,
+  ISpotifyFetchResult,
   ITrackObject,
 } from '../types/spotify';
 
 let AuthorizationToken: null | string = null;
+let AuthorizationTokenExpiresAt = 0;
+
+/**
+ * Shaved off the token's lifetime so we never send one that expires mid-request.
+ */
+const TOKEN_EXPIRY_MARGIN_MS = 60 * 1000;
+
+/**
+ * Fallback lifetime if Spotify ever omits expires_in.
+ */
+const TOKEN_DEFAULT_LIFETIME_S = 3600;
 
 /**
  * Uses my refresh token to get a brand new spotify auth token!
  *
+ * Access tokens only live an hour, and a warm serverless instance outlives
+ * that, so the cached one has to be re-requested once it expires.
+ *
+ * @param {boolean} [forceRefresh = false] Ignore the cached token.
  * @returns {Promise<string>} Authorization header for Spotify requests.
  */
-const getAuthorizationToken = async (): Promise<string> => {
-  if (AuthorizationToken !== null) {
+const getAuthorizationToken = async (forceRefresh = false): Promise<string> => {
+  if (!forceRefresh
+    && AuthorizationToken !== null
+    && Date.now() < AuthorizationTokenExpiresAt) {
     return AuthorizationToken;
   }
 
@@ -49,18 +67,65 @@ const getAuthorizationToken = async (): Promise<string> => {
     refresh_token: SPOTIFY_REFRESH_TOKEN,
   });
 
-  const response: IAuthorizationTokenResponse = await fetch(`${SPOTIFY_AUTHORIZATION_URL}`, {
+  const response = await fetch(`${SPOTIFY_AUTHORIZATION_URL}`, {
     method: 'POST',
     headers: {
       'Authorization': SPOTIFY_AUTHORIZATION,
       'Content-Type': CONTENT_TYPE,
     },
     body,
-  }).then((r) => r.json());
+  });
 
-  AuthorizationToken = `Bearer ${response.access_token}`
+  const data: IAuthorizationTokenResponse = await response.json();
+
+  // Never cache a failure as if it were a token: `Bearer undefined` turns
+  // every later call into a silent 401 with nothing in the logs to explain it.
+  if (!response.ok || !data.access_token) {
+    AuthorizationToken = null;
+    AuthorizationTokenExpiresAt = 0;
+
+    throw new Error(`Spotify token refresh failed (${response.status}): ${data.error || 'unknown_error'} - ${data.error_description || 'no description'}`);
+  }
+
+  AuthorizationToken = `Bearer ${data.access_token}`;
+  AuthorizationTokenExpiresAt = Date.now()
+    + ((data.expires_in || TOKEN_DEFAULT_LIFETIME_S) * 1000)
+    - TOKEN_EXPIRY_MARGIN_MS;
 
   return AuthorizationToken;
+}
+
+/**
+ * Makes an authorized request to Spotify, refreshing the token once if it's
+ * rejected.
+ *
+ * @param {string} url Spotify endpoint to request.
+ * @returns {Promise<ISpotifyFetchResult>} Response, and the header it was made with.
+ */
+const spotifyFetch = async (url: string): Promise<ISpotifyFetchResult> => {
+  let Authorization: string = await getAuthorizationToken();
+
+  let response: Response = await fetch(url, {
+    headers: {
+      Authorization,
+    },
+  });
+
+  // Token Spotify no longer accepts (revoked mid-flight, clock skew): one retry.
+  if (response.status === 401) {
+    Authorization = await getAuthorizationToken(true);
+
+    response = await fetch(url, {
+      headers: {
+        Authorization,
+      },
+    });
+  }
+
+  return {
+    response,
+    Authorization,
+  };
 }
 
 /**
@@ -87,13 +152,10 @@ const defaultCurrentlyPlayingResponse = (Authorization: string, track: ITrackObj
  * @returns {Promise<ICurrentlyPlayingResponse | object>} Currently Playing Spotify Object.
  */
 export const getNowPlaying = async (): Promise<ICurrentlyPlayingResponse> => {
-  const Authorization: string = await getAuthorizationToken();
-
-  const response: Response = await fetch(SPOTIFY_CURRENT_PLAYING_URL, {
-    headers: {
-      Authorization,
-    },
-  });
+  const {
+    response,
+    Authorization,
+  } = await spotifyFetch(SPOTIFY_CURRENT_PLAYING_URL);
 
   const { status } = response;
 
@@ -113,24 +175,22 @@ export const getNowPlaying = async (): Promise<ICurrentlyPlayingResponse> => {
  * @returns {Promise<ICursorBasedPagingObject | object>} Currently Playing Spotify Object
  */
 export const getLastPlayed = async (): Promise<ICurrentlyPlayingResponse> => {
-  const Authorization: string = await getAuthorizationToken();
-
-  const response: Response = await fetch(SPOTIFY_RECENTLY_PLAYED_URL, {
-    headers: {
-      Authorization,
-    },
-  });
+  const {
+    response,
+    Authorization,
+  } = await spotifyFetch(SPOTIFY_RECENTLY_PLAYED_URL);
 
   const { status } = response;
 
   if (status === 200) {
     const data: ICursorBasedPagingObject<IPlayHistoryObject> = await response.json();
 
-    const trackResponse: Response = await fetch(`${SPOTIFY_GET_TRACK_URL}/${ data.items[0].track.id }`, {
-      headers: {
-        Authorization,
-      },
-    });
+    // Nothing in the history: nothing to show.
+    if (!data.items || !data.items.length) {
+      return defaultCurrentlyPlayingResponse(Authorization);
+    }
+
+    const { response: trackResponse } = await spotifyFetch(`${SPOTIFY_GET_TRACK_URL}/${ data.items[0].track.id }`);
 
     const track: ITrackObject = await trackResponse.json();
 
@@ -146,13 +206,7 @@ export const getLastPlayed = async (): Promise<ICurrentlyPlayingResponse> => {
  * @returns {Promise<IAudioFeaturesResponse | object>} Audio features object.
  */
 export const getTracksAudioFeatures = async (id: string): Promise<IAudioFeaturesResponse | object> => {
-  const Authorization: string = await getAuthorizationToken();
-
-  const response: Response = await fetch(`${SPOTIFY_GET_TRACK_AUDIO_FEATURES_URL}/${id}`, {
-    headers: {
-      Authorization,
-    },
-  });
+  const { response } = await spotifyFetch(`${SPOTIFY_GET_TRACK_AUDIO_FEATURES_URL}/${id}`);
 
   const { status } = response;
 
@@ -170,13 +224,7 @@ export const getTracksAudioFeatures = async (id: string): Promise<IAudioFeatures
  * @returns {Promise<ITrackObject[]>} Array of Spotify track objects.
  */
 export const getTopPlayed = async (timeRange: string): Promise<ITrackObject[]> => {
-  const Authorization: string = await getAuthorizationToken();
-
-  const response: Response = await fetch(`${SPOTIFY_GET_TOP_PLAYED_URL}${timeRange}`, {
-    headers: {
-      Authorization,
-    },
-  });
+  const { response } = await spotifyFetch(`${SPOTIFY_GET_TOP_PLAYED_URL}${timeRange}`);
 
   const { status } = response;
 
@@ -194,13 +242,7 @@ export const getTopPlayed = async (timeRange: string): Promise<ITrackObject[]> =
  * @returns {Promise<ITrackObject[]>} Array of Spotify track objects.
  */
 export const getSavedTracks = async (): Promise<ITrackObject[]> => {
-  const Authorization: string = await getAuthorizationToken();
-
-  const response: Response = await fetch(SPOTIFY_SAVED_TRACKS_URL, {
-    headers: {
-      Authorization,
-    },
-  });
+  const { response } = await spotifyFetch(SPOTIFY_SAVED_TRACKS_URL);
 
   const { status } = response;
 
@@ -218,13 +260,7 @@ export const getSavedTracks = async (): Promise<ITrackObject[]> => {
  * @returns {Promise<ITrackObject[]>} Array of Spotify track objects.
  */
 export const getRecentlyPlayedTracks = async (): Promise<ITrackObject[]> => {
-  const Authorization: string = await getAuthorizationToken();
-
-  const response: Response = await fetch(`${SPOTIFY_RECENTLY_PLAYED_URL.replace('limit=1', 'limit=5')}`, {
-    headers: {
-      Authorization,
-    },
-  });
+  const { response } = await spotifyFetch(`${SPOTIFY_RECENTLY_PLAYED_URL.replace('limit=1', 'limit=5')}`);
 
   const { status } = response;
 

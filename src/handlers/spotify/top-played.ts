@@ -72,6 +72,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
 
     return res.send(text);
   } catch (error) {
-    res.status(500).send(ERROR_MESSAGE_500);
+    console.error(error);
+    return res.status(500).send(ERROR_MESSAGE_500);
   }
 }

@@ -21,7 +21,20 @@ import { ERROR_MESSAGE_500 } from '../../config';
 import { Player } from '../../components/spotify/NowPlaying';
 
 // Types
-import { IAudioFeaturesResponse } from '../../types/spotify';
+import {
+  IAudioFeaturesResponse,
+  IConvertedTrackObject,
+} from '../../types/spotify';
+
+/**
+ * Shown when Spotify has neither a current nor a recent track for us.
+ */
+const NO_TRACK: IConvertedTrackObject = {
+  image: null,
+  artist: '',
+  name: '',
+  href: '#',
+};
 
 /**
  * Returns an image displaying my current playback state, with nice music bars.
@@ -63,17 +76,18 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     // And they move to the beat of the song :)
     let audioFeatures: IAudioFeaturesResponse | object = null;
 
-    if (Object.keys(item).length) {
+    if (item && Object.keys(item).length) {
       audioFeatures = await getTracksAudioFeatures(item.id);
     }
 
-    // Minimum data for the track.
-    const track = await convertTrackToMinimumData(item);
+    // Minimum data for the track. Having nothing to show is a normal state,
+    // not an error: render the empty player rather than blowing up on null.
+    const track: IConvertedTrackObject = item
+      ? await convertTrackToMinimumData(item)
+      : NO_TRACK;
 
     // Getting duration of the track.
-    const {
-      duration_ms: duration,
-    } = item;
+    const duration: number = item ? item.duration_ms : 0;
 
     // Hey! I'm returning an image!
     convertToImageResponse(res);
@@ -89,7 +103,7 @@ export default async function (req: VercelRequest, res: VercelResponse) {
 
     return res.send(text);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).send(ERROR_MESSAGE_500);
   }
 }

@@ -121,6 +121,13 @@ export interface IAuthorizationTokenResponse {
   token_type: string;
   scope: string;
   expires_in: number;
+  error?: string;
+  error_description?: string;
+}
+
+export interface ISpotifyFetchResult {
+  response: Response;
+  Authorization: string;
 }
 
 export interface IConvertedTrackObject {
