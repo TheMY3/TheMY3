@@ -7,3 +7,7 @@ updates:
       interval: monthly
       day: "saturday"
     open-pull-requests-limit: 5
+    groups:
+      patch:
+        patterns: ["*"]
+        update-types: ["patch"]
