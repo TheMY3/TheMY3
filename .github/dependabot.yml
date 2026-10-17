@@ -8,6 +8,6 @@ updates:
       day: "saturday"
     open-pull-requests-limit: 5
     groups:
-      patch:
+      minor-and-patch:
         patterns: ["*"]
-        update-types: ["patch"]
+        update-types: ["minor", "patch"]
